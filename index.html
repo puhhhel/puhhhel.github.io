@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>%%TITLE%%</title>
+    <title>Праздник на коленке</title>
     <script>
       var DEFAULT_GAME_FILENAME = 'game.zip';
     </script>
@@ -143,7 +143,7 @@
     <script>
       // Subtly hint at lack of WebAssembly support (if applicable)
       if (typeof WebAssembly !== 'object') {
-          var error_message = "Unsupported browser - please upgrade!\n(WebAssembly support needed)";
+          var error_message = "Неподдерживаемый браузер - пожалуйста, обновите!\n(требуется поддержка WebAssembly)";
           document.body = document.createElement('body');
           document.body.innerHTML = error_message.replace('\n', '<br />');
           location.href = 'javascript:alert("' + error_message.replace('\n', '\\n') + '")';
@@ -162,15 +162,15 @@
       <a id="ContextButton">&#8801;</a><br />
       <div id="ContextMenu" style="display: none;">
         <input id="ID_SavegamesImport" type="file" onchange="onSavegamesImport(this)" accept="application/zip" style=display:none></input>
-        <a href="javascript:document.getElementById('ID_SavegamesImport').click();">Import saves</a><br />
-        <a href="javascript:onSavegamesExport();">Export saves</a><br />
-        <a href="javascript:FSDownload('/log.txt', 'text/plain');">Ren'Py log</a><br />
-        <a href="https://renpy.beuc.net/" target="_blank">
+        <a href="javascript:document.getElementById('ID_SavegamesImport').click();">Импорт сохранений</a><br />
+        <a href="javascript:onSavegamesExport();">Экспорт сохранений</a><br />
+        <!-- href="javascript:FSDownload('/log.txt', 'text/plain');">Ren'Py log</a><br />
+        < a href="https://renpy.beuc.net/" target="_blank" --!>
           <span style="font-size: smaller">
             <span style="color: dimgrey">Powered by</span>
             RenPyWeb
           </span>
-        </a>
+        </a-->
         </span>
       </div>
     </div>
@@ -196,9 +196,9 @@
           FS.syncfs(false, function(err) {
             if (err) {
               console.trace(); console.log(err, err.message);
-              Module.print("Warning: cannot import savegames: write error: " + err.message + "\n");
+              Module.print("Предупреждение: не удается импортировать savegames.zip: ошибка записи: " + err.message + "\n");
             } else {
-              Module.print("Saves imported - restart game to apply.\n");
+              Module.print("Сохранения импортированны - перезапустите игру для применения.\n");
             }
           });
         }
@@ -222,11 +222,11 @@
           "zip_ref.close()\n"
         ])
         if (ret != 0) {
-            Module.setStatus("Error extracting .zip.");
+            Module.setStatus("Ошибка извлечения .zip.");
             return;
         }
         FS.unlink('/game.zip')
-        Module.print("Extracted in " + (Date.now()-start)/1000.0 + "s\n");
+        Module.print("Извлечено в " + (Date.now()-start)/1000.0 + "s\n");
 
         if (FS.readdir('/').indexOf('game') < 0) {
             Module.setStatus("Invalid .zip (no top-level 'game' directory).");
@@ -258,7 +258,7 @@
           img.style = 'display: block; margin: auto; width: 100%; height: 100%; object-fit: contain';
           div.appendChild(img)
         } else {
-          Module.print("Loading game, please wait...\n");
+          Module.print("Игра загружается, пожалуйста, подождите...\n");
         }
 
         // give control back to webui before running main
@@ -279,7 +279,7 @@
           a.href = window.URL.createObjectURL(new Blob([FS.readFile(filename)],
                                                        { type: mimetype || '' }));
         } catch(e) {
-          Module.print("Error opening " + filename + "\n");
+          Module.print("Ошибка открытия " + filename + "\n");
           return;
         }
         document.body.appendChild(a);
@@ -340,7 +340,7 @@
           // As a default initial behavior, pop up an alert when webgl context is lost. To make your
           // application robust, you may want to override this behavior before shipping!
           // See http://www.khronos.org/registry/webgl/specs/latest/1.0/#5.15.2
-          canvas.addEventListener("webglcontextlost", function(e) { alert('WebGL context lost. You will need to reload the page.'); e.preventDefault(); }, false);
+          canvas.addEventListener("webglcontextlost", function(e) { alert('WebGL context lost. Вам нужно перезагрузить страницу.'); e.preventDefault(); }, false);
 
           return canvas;
         })(),
@@ -383,7 +383,7 @@
         // TODO: do not warn on ok events like simulating an infinite loop or exitStatus
         //Module.setStatus('Exception thrown, see JavaScript console');
         // Explicitly display meaningful errors such as "uncaught exception: out of memory":
-        Module.setStatus('Error: ' + event.split('\n')[0] + ' (see JavaScript console for details)');
+        Module.setStatus('Ошибка: ' + event.split('\n')[0] + ' (дополнительные сведения см. в консоли JavaScript)');
         spinnerElement.style.display = 'none';
         Module.setStatus = function(text) {
           if (text) Module.printErr('[post-exception status] ' + text);
@@ -400,13 +400,13 @@
           FS.mount(IDBFS, {}, '/home/web_user/.renpy');
         } catch(e) {
           console.log(e);
-          Module.print("Could not create ~/.renpy/ : " + e.message + "\n");
+          Module.print("Не удалось создать ~/.renpy/ : " + e.message + "\n");
         }
         FS.syncfs(true, function(err) {
           if (err) {
               console.trace(); console.log(err, err.message);
               // Note: not visible enough, quickly replaced by loading status
-              Module.print("Warning: cannot save games\n");
+              Module.print("Предупреждение: не удается сохранить игру.\n");
           }
         });
       }
