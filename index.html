@@ -164,14 +164,8 @@
         <input id="ID_SavegamesImport" type="file" onchange="onSavegamesImport(this)" accept="application/zip" style=display:none></input>
         <a href="javascript:document.getElementById('ID_SavegamesImport').click();">Импорт сохранений</a><br />
         <a href="javascript:onSavegamesExport();">Экспорт сохранений</a><br />
-        <!-- href="javascript:FSDownload('/log.txt', 'text/plain');">Ren'Py log</a><br />
-        < a href="https://renpy.beuc.net/" target="_blank" --!>
-          <span style="font-size: smaller">
-            <span style="color: dimgrey">Powered by</span>
-            RenPyWeb
-          </span>
-        </a-->
-        </span>
+        <!-- href="javascript:FSDownload('/log.txt', 'text/plain');">Ren'Py log</a><br /-->
+        <!-- a href="https://renpy.beuc.net/" target="_blank" ><span style="font-size: smaller"><span style="color: dimgrey">Powered by</span>RenPyWeb</span></a></span-->
       </div>
     </div>
 
@@ -226,7 +220,7 @@
             return;
         }
         FS.unlink('/game.zip')
-        Module.print("Извлечено в " + (Date.now()-start)/1000.0 + "s\n");
+        Module.print("Извлечено за " + (Date.now()-start)/1000.0 + "s\n");
 
         if (FS.readdir('/').indexOf('game') < 0) {
             Module.setStatus("Invalid .zip (no top-level 'game' directory).");
